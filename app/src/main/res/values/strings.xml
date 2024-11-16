@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">LaboratorioCalificado03</string>
+    <string name="error_fetching_data">Error al obtener los datos</string>
+    <string name="connection_error">Error de conexión</string>
+    <string name="welcome_message">¡Bienvenido a tu agenda de contactos</string>
+
 </resources>

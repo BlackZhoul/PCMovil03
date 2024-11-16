@@ -1,6 +1,8 @@
 package com.lluvians.alvaro.laboratoriocalificado03
 
 import android.os.Bundle
+import android.os.Handler
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
@@ -8,7 +10,6 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.lluvians.alvaro.laboratoriocalificado03.adapter.TeacherAdapter
 import com.lluvians.alvaro.laboratoriocalificado03.databinding.ActivityEjercicio01Binding
-import com.lluvians.alvaro.laboratoriocalificado03.databinding.ActivityMainBinding
 import com.lluvians.alvaro.laboratoriocalificado03.model.Teacher
 
 class Ejercicio01 : AppCompatActivity() {
@@ -44,10 +45,20 @@ class Ejercicio01 : AppCompatActivity() {
                 )
             }
             binding.recyclerView.adapter = TeacherAdapter(this, teacherList)
-        }, {
-            it.printStackTrace()
+        }, { error ->
+            // En caso de error, mostrar un Toast y un mensaje en el TextView
+            Toast.makeText(this, getString(R.string.error_fetching_data), Toast.LENGTH_SHORT).show()
+            binding.errorTextView.text = getString(R.string.error_fetching_data) // Mostrar en TextView
+            binding.errorTextView.visibility = android.view.View.VISIBLE // Hacer visible el TextView de error
         })
 
         requestQueue.add(request)
+
+        // Mostrar el mensaje de bienvenida y ocultarlo después de 3 segundos
+        binding.welcomeTextView.visibility = android.view.View.VISIBLE
+        // Usamos Handler para ejecutar el código después de 3 segundos
+        Handler().postDelayed({
+            binding.welcomeTextView.visibility = android.view.View.GONE
+        }, 3000) // 3000 milisegundos = 3 segundos
     }
 }
